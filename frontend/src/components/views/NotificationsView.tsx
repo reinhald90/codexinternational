@@ -1,4 +1,9 @@
-export function NotificationsView() {
+interface NotificationsViewProps {
+  onOpenChannel?: (channelId: string) => void
+  onOpenDm?: (userId: string) => void
+}
+
+export function NotificationsView(_props: NotificationsViewProps) {
   return (
     <div className="page-scroll">
       <h1>Activity</h1>
