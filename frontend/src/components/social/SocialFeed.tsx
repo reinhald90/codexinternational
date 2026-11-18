@@ -67,7 +67,7 @@ export function SocialFeed({
             <p>Quick thoughts, shared interests, and conversations that keep going.</p>
           </div>
           <span className="social-state">
-            LOCAL TIMELINE <i />
+            COMMUNITY FEED <i />
           </span>
         </div>
 

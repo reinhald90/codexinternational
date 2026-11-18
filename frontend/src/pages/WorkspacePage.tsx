@@ -176,7 +176,7 @@ export function WorkspacePage({ session, viewport, onLogout }: WorkspacePageProp
     view === 'channel'
       ? channel?.name ?? 'general'
       : view === 'dm'
-        ? currentDm.name
+        ? currentDm?.name ?? 'Direct messages'
         : view === 'social'
           ? 'Social feed'
           : view === 'bots'
@@ -731,8 +731,7 @@ export function WorkspacePage({ session, viewport, onLogout }: WorkspacePageProp
           onSubmit={(e) => {
             e.preventDefault()
             if (modal === 'invite') {
-              void navigator.clipboard?.writeText('community.example/invite/demo')
-              notify('Invite link copied')
+              notify('Invite links will be available when the invite API is connected.')
               setModal(null)
               return
             }
