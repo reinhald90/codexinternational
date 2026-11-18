@@ -6,7 +6,7 @@ import type { Attachment, Channel, Message, Server, User } from '../../types/cha
 
 interface ChatPanelProps {
   isDm: boolean
-  currentDm: User
+  currentDm?: User
   channel?: Channel
   server?: Server
   feedRef: RefObject<HTMLDivElement | null>
@@ -65,8 +65,14 @@ export function ChatPanel({
 }: ChatPanelProps) {
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null)
 
-  const handleToggleMenu = (messageId: string) => {
-    setActiveMenuId((current) => (current === messageId ? null : messageId))
+  if ((!isDm && !server) || (isDm && !currentDm)) {
+    return (
+      <div className="directory-empty">
+        <Icon name="message" size={26} />
+        <strong>No conversation selected</strong>
+        <span>Join a community or open a conversation to get started.</span>
+      </div>
+    )
   }
 
   const handleStartReply = (message: Message) => {
@@ -74,24 +80,9 @@ export function ChatPanel({
     setActiveMenuId(null)
   }
 
-  const handleStartEdit = (message: Message) => {
-    onEdit(message)
-    setActiveMenuId(null)
-  }
-
-  const handleRemove = (message: Message) => {
-    onRemove(message)
-    setActiveMenuId(null)
-  }
-
-  const handleTogglePin = (message: Message) => {
-    onTogglePin(message)
-    setActiveMenuId(null)
-  }
-
   const placeholder = isDm
-    ? `Message ${currentDm.name}`
-    : `Message #${channel?.name ?? 'general'}`
+    ? `Message ${currentDm?.name ?? ''}`
+    : `Message #${channel?.name ?? ''}`
 
   return (
     <>
@@ -102,24 +93,15 @@ export function ChatPanel({
           </div>
           <div>
             <span className="eyebrow">{isDm ? 'DIRECT MESSAGE' : 'YOU ARE IN'}</span>
-            <h1>{isDm ? currentDm.name : `#${channel?.name ?? 'general'}`}</h1>
+            <h1>{isDm ? currentDm?.name : `#${channel?.name ?? ''}`}</h1>
             <p>
-              {isDm ? (
-                'This is the beginning of your private conversation.'
-              ) : (
-                <>
-                  This is the start of <strong>#{channel?.name ?? 'general'}</strong> in{' '}
-                  {server?.name}.
-                </>
-              )}
+              {isDm
+                ? 'This is the beginning of your private conversation.'
+                : <>This is the start of <strong>#{channel?.name ?? ''}</strong> in {server?.name}.</>}
             </p>
           </div>
           <div className="welcome-actions">
-            <button
-              onClick={() =>
-                isDm ? onNotify('Conversation options opened.') : onInvite()
-              }
-            >
+            <button onClick={() => isDm ? onNotify('Conversation options opened.') : onInvite()}>
               <Icon name={isDm ? 'more' : 'users'} size={15} />
               {isDm ? 'Options' : 'Invite'}
             </button>
@@ -129,31 +111,27 @@ export function ChatPanel({
           </div>
         </div>
 
-        <div className="day-divider">
-          <span>Today</span>
-        </div>
-
-        {messages.map((m) => (
+        {messages.map((message) => (
           <MessageItem
-            key={m.id}
-            message={m}
-            isPinned={pinnedMessageIds.includes(m.id)}
-            isMenuOpen={activeMenuId === m.id}
+            key={message.id}
+            message={message}
+            isPinned={pinnedMessageIds.includes(message.id)}
+            isMenuOpen={activeMenuId === message.id}
             onReact={onReact}
             onReply={handleStartReply}
-            onEdit={handleStartEdit}
-            onRemove={handleRemove}
-            onTogglePin={handleTogglePin}
-            onToggleMenu={handleToggleMenu}
-            onReplyReferenceClick={(refId) => onNotify(`Reply reference: ${refId}`)}
+            onEdit={(item) => { onEdit(item); setActiveMenuId(null) }}
+            onRemove={(item) => { onRemove(item); setActiveMenuId(null) }}
+            onTogglePin={(item) => { onTogglePin(item); setActiveMenuId(null) }}
+            onToggleMenu={(id) => setActiveMenuId((current) => current === id ? null : id)}
+            onReplyReferenceClick={(id) => onNotify(`Reply reference: ${id}`)}
           />
         ))}
 
         {messages.length === 0 && (
           <div className="empty-state">
-            <Icon name="search" size={25} />
-            <strong>No messages found</strong>
-            <span>Try a different search term.</span>
+            <Icon name="message" size={25} />
+            <strong>No messages yet</strong>
+            <span>Messages will appear here when the conversation starts.</span>
           </div>
         )}
       </div>
