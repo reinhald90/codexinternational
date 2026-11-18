@@ -1,7 +1,9 @@
 import { Icon } from '../common/Icon'
+import type { Server } from '../../types/chat'
 
 interface DiscoverViewProps {
   onCreateCommunity: () => void
+  onJoinCommunity?: (server: Server) => void
 }
 
 export function DiscoverView({ onCreateCommunity }: DiscoverViewProps) {
