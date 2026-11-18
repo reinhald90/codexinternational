@@ -1,4 +1,3 @@
-import { STORAGE_KEYS } from '../constants/storageKeys'
 import { defaultData } from '../constants/seedData'
 import type { Data } from '../types/chat'
 import type { SocialPost } from '../types/social'
