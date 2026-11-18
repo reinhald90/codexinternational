@@ -1,0 +1,674 @@
+/* Adaptive Auth Landing: Split two-column card on Desktop Web, native full-screen steps on Mobile */
+
+.landing-shell {
+  --lp-sans: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  background: #111112;
+  color: #ececec;
+  font-family: var(--lp-sans);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.landing-dots {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.landing-dots .dots {
+  position: absolute;
+  border-radius: 50%;
+  background-size: 14px 14px;
+  opacity: 0.7;
+  -webkit-mask-image: radial-gradient(closest-side, #000 20%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 20%, transparent 100%);
+}
+
+.landing-dots .d1 {
+  width: 62vmax;
+  height: 62vmax;
+  left: -34vmax;
+  top: 8%;
+  background-image: radial-gradient(circle, #3b82f6 1.2px, transparent 1.6px);
+}
+
+.landing-dots .d2 {
+  width: 50vmax;
+  height: 50vmax;
+  left: -22vmax;
+  top: 38%;
+  background-image: radial-gradient(circle, #ef6a5a 1.2px, transparent 1.6px);
+}
+
+.landing-dots .d3 {
+  width: 46vmax;
+  height: 46vmax;
+  right: -24vmax;
+  top: 34%;
+  background-image: radial-gradient(circle, #d9795b 1.2px, transparent 1.6px);
+}
+
+.landing-dots .d4 {
+  width: 44vmax;
+  height: 44vmax;
+  left: 30%;
+  bottom: -24vmax;
+  background-image: radial-gradient(circle, #e0a53a 1.2px, transparent 1.6px);
+}
+
+.landing-brand-mark {
+  display: block;
+  flex: 0 0 auto;
+  object-fit: cover;
+  border-radius: 30% 30% 30% 12%;
+  background: #0e1230;
+}
+
+/* ── Desktop Web Split Showcase Layout ── */
+.landing-desktop-frame {
+  position: relative;
+  z-index: 1;
+  width: min(1040px, 100%);
+  margin: auto;
+  padding: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(380px, 440px);
+  gap: 48px;
+  align-items: center;
+  animation: landing-enter 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.landing-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.landing-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.landing-badge-pill {
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(29, 155, 240, 0.35);
+  background: rgba(29, 155, 240, 0.12);
+  color: #6bc2ff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.landing-showcase h1 {
+  margin: 0;
+  font-size: clamp(32px, 3.8vw, 44px);
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+  color: #f4f5f7;
+}
+
+.landing-showcase-lead {
+  margin: 0;
+  max-width: 48ch;
+  color: #a4a7ae;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.landing-pillars {
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.landing-pillar {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #282a2f;
+  background: rgba(24, 25, 29, 0.86);
+}
+
+.landing-pillar strong {
+  display: block;
+  color: #eceef2;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.landing-pillar span {
+  display: block;
+  color: #9397a0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.landing-card {
+  padding: 28px;
+  border-radius: 22px;
+  border: 1px solid #2b2d33;
+  background: rgba(21, 22, 26, 0.94);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.48);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.landing-card-head h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  color: #f5f5f7;
+}
+
+.landing-card-head p {
+  margin: 0;
+  color: #969aa3;
+  font-size: 13px;
+}
+
+.landing-mode-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 4px;
+  border-radius: 12px;
+  background: #1b1c20;
+  border: 1px solid #2a2c32;
+}
+
+.landing-mode-tabs button {
+  height: 36px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #9a9ea8;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.landing-mode-tabs button.active {
+  background: #2b2d34;
+  color: #fff;
+}
+
+/* ── Mobile Native-Style Auth Screen ── */
+.landing-screen {
+  position: relative;
+  z-index: 1;
+  width: min(460px, 100%);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px calc(24px + env(safe-area-inset-bottom, 0px));
+  animation: landing-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.landing-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: calc(24px + env(safe-area-inset-top, 0px)) 0 18px;
+  text-align: center;
+}
+
+.landing-hero h1 {
+  margin: 0;
+  max-width: 17ch;
+  font-size: clamp(26px, 7vw, 32px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #f4f4f6;
+}
+
+.landing-hero-sub {
+  margin: 0;
+  max-width: 34ch;
+  color: #9a9da5;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.landing-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.oauth-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid #303238;
+  border-radius: 13px;
+  background: #202125;
+  color: #ececef;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease;
+}
+
+.oauth-btn:hover:not(:disabled) {
+  background: #292a30;
+  border-color: #42454e;
+}
+
+.oauth-btn:disabled {
+  opacity: 0.52;
+  cursor: not-allowed;
+}
+
+.oauth-icon {
+  position: absolute;
+  left: 16px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+}
+
+.landing-oauth-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.landing-oauth-row .oauth-btn {
+  padding-left: 38px;
+  font-size: 13px;
+}
+
+.landing-or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #70737b;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.landing-or::before,
+.landing-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #2b2d33;
+}
+
+.landing-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 56px;
+  margin-top: env(safe-area-inset-top, 0px);
+  border-bottom: 1px solid #24262b;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.landing-back {
+  position: absolute;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  color: #e6e6e6;
+  cursor: pointer;
+}
+
+.landing-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.landing-field-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #9ba0aa;
+}
+
+.landing-input {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid #35373e;
+  border-radius: 11px;
+  background: #1a1b1f;
+  color: #f3f3f5;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.landing-input:focus {
+  border-color: #1d9bf0;
+}
+
+.landing-otp-input {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+}
+
+.landing-continue {
+  width: 100%;
+  height: 48px;
+  margin-top: 4px;
+  border: none;
+  border-radius: 12px;
+  background: #3a3c44;
+  color: #c7c9d1;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+
+.landing-continue.is-ready {
+  background: #1d9bf0;
+  color: #fff;
+}
+
+.landing-continue:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.landing-error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(244, 33, 46, 0.35);
+  background: rgba(244, 33, 46, 0.12);
+  color: #ff8e96;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.landing-info {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(29, 155, 240, 0.35);
+  background: rgba(29, 155, 240, 0.11);
+  color: #8fd0ff;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.landing-help {
+  margin: 4px 0 0;
+  text-align: center;
+  color: #9397a0;
+  font-size: 12px;
+}
+
+.landing-help button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #6bc2ff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.landing-help button:disabled {
+  color: #6b6f78;
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+@keyframes landing-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-desktop-frame,
+  .landing-screen {
+    animation-duration: 0.01ms !important;
+  }
+}
+
+
+/* ══════════════════════════════════════════════
+   POLISH: smooth step transition + button motion
+   (blok ini menimpa transisi lama, UI lain tidak berubah)
+   ══════════════════════════════════════════════ */
+
+
+/* --smooth-step-transition-- */
+
+/* Konten tiap step masuk dari kanan (maju ke form email/password/register) */
+.landing-screen > div {
+  -webkit-animation: landing-step-in-right 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation: landing-step-in-right 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Kembali ke welcome (topbar hilang): konten masuk dari kiri */
+.landing-screen:not(:has(> .landing-topbar)) > div {
+  -webkit-animation-name: landing-step-in-left;
+  animation-name: landing-step-in-left;
+}
+
+.landing-screen > .landing-actions {
+  -webkit-animation-delay: 0.06s;
+  animation-delay: 0.06s;
+}
+
+.landing-screen > .landing-topbar {
+  -webkit-animation: landing-fade-down 0.32s ease backwards;
+  animation: landing-fade-down 0.32s ease backwards;
+}
+
+
+/* --smooth-form-stagger-- */
+
+/* Field form muncul berurutan, halus (mobile & tab desktop) */
+.landing-form > * {
+  -webkit-animation: landing-rise 0.38s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation: landing-rise 0.38s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+.landing-form > *:nth-child(2) { -webkit-animation-delay: 0.04s; animation-delay: 0.04s; }
+.landing-form > *:nth-child(3) { -webkit-animation-delay: 0.08s; animation-delay: 0.08s; }
+.landing-form > *:nth-child(4) { -webkit-animation-delay: 0.12s; animation-delay: 0.12s; }
+.landing-form > *:nth-child(5) { -webkit-animation-delay: 0.16s; animation-delay: 0.16s; }
+.landing-form > *:nth-child(n + 6) { -webkit-animation-delay: 0.2s; animation-delay: 0.2s; }
+
+.landing-error,
+.landing-info {
+  -webkit-animation: landing-rise 0.28s ease backwards;
+  animation: landing-rise 0.28s ease backwards;
+}
+
+
+/* --button-motion-- */
+
+.oauth-btn,
+.landing-continue,
+.landing-mode-tabs button,
+.landing-back,
+.landing-help button {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    opacity 0.2s ease,
+    -webkit-transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    opacity 0.2s ease,
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.landing-input {
+  -webkit-transition: border-color 0.2s ease, background 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+/* Hover angkat tipis (hanya device yang punya hover) */
+@media (hover: hover) {
+  .oauth-btn:hover:not(:disabled),
+  .landing-continue.is-ready:hover:not(:disabled) {
+    -webkit-transform: translateY(-1px);
+    transform: translateY(-1px);
+  }
+}
+
+/* Press feedback */
+.oauth-btn:active:not(:disabled),
+.landing-continue:active:not(:disabled) {
+  -webkit-transform: scale(0.97);
+  transform: scale(0.97);
+}
+
+.landing-mode-tabs button:active {
+  -webkit-transform: scale(0.96);
+  transform: scale(0.96);
+}
+
+.landing-back:active {
+  -webkit-transform: translateX(-3px) scale(0.92);
+  transform: translateX(-3px) scale(0.92);
+  opacity: 0.7;
+}
+
+.landing-help button:active:not(:disabled) {
+  opacity: 0.65;
+}
+
+/* Tombol lanjut "pop" kecil saat berubah jadi ready */
+.landing-continue.is-ready {
+  -webkit-animation: landing-ready-pop 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: landing-ready-pop 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* --polish-keyframes-- */
+
+@-webkit-keyframes landing-step-in-right {
+  from { opacity: 0; -webkit-transform: translateX(28px); transform: translateX(28px); }
+  to   { opacity: 1; -webkit-transform: translateX(0); transform: translateX(0); }
+}
+
+@keyframes landing-step-in-right {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@-webkit-keyframes landing-step-in-left {
+  from { opacity: 0; -webkit-transform: translateX(-28px); transform: translateX(-28px); }
+  to   { opacity: 1; -webkit-transform: translateX(0); transform: translateX(0); }
+}
+
+@keyframes landing-step-in-left {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@-webkit-keyframes landing-fade-down {
+  from { opacity: 0; -webkit-transform: translateY(-6px); transform: translateY(-6px); }
+  to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+}
+
+@keyframes landing-fade-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@-webkit-keyframes landing-rise {
+  from { opacity: 0; -webkit-transform: translateY(8px); transform: translateY(8px); }
+  to   { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+}
+
+@keyframes landing-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@-webkit-keyframes landing-ready-pop {
+  0%   { -webkit-transform: scale(1); transform: scale(1); }
+  45%  { -webkit-transform: scale(1.025); transform: scale(1.025); }
+  100% { -webkit-transform: scale(1); transform: scale(1); }
+}
+
+@keyframes landing-ready-pop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.025); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-screen > div,
+  .landing-screen > .landing-topbar,
+  .landing-form > *,
+  .landing-error,
+  .landing-info,
+  .landing-continue.is-ready {
+    -webkit-animation: none !important;
+    animation: none !important;
+  }
+
+  .oauth-btn,
+  .landing-continue,
+  .landing-mode-tabs button,
+  .landing-back,
+  .landing-help button {
+    -webkit-transition: none !important;
+    transition: none !important;
+  }
+}
+
+
+/* --slide-direction-- */
+
+/* Arah slide dari state React (data-dir), menimpa tebakan :has di atas */
+.landing-screen[data-dir='forward'] > div {
+  -webkit-animation-name: landing-step-in-right;
+  animation-name: landing-step-in-right;
+}
+
+.landing-screen[data-dir='back'] > div {
+  -webkit-animation-name: landing-step-in-left;
+  animation-name: landing-step-in-left;
+}
