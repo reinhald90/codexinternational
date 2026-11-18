@@ -1,7 +1,10 @@
 import { Icon } from '../common/Icon'
 
 interface SocialAsideProps {
+  followedHandles?: string[]
   onFocusComposer: () => void
+  onToggleFollow?: (handle: string) => void
+  onSelectTopic?: (topic: string) => void
 }
 
 export function SocialAside({ onFocusComposer }: SocialAsideProps) {
