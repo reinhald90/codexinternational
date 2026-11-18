@@ -176,7 +176,7 @@ export function WorkspacePage({ session, viewport, onLogout }: WorkspacePageProp
     view === 'channel'
       ? channel?.name ?? 'general'
       : view === 'dm'
-        ? currentDm.name
+        ? currentDm?.name ?? 'Direct messages'
         : view === 'social'
           ? 'Social feed'
           : view === 'bots'
